@@ -43,8 +43,6 @@ import org.neo4j.driver.TransactionConfig;
 import org.neo4j.driver.internal.handlers.pulln.FetchSizeUtil;
 import org.neo4j.driver.internal.spi.Connection;
 import org.neo4j.driver.internal.spi.ConnectionProvider;
-import org.neo4j.driver.internal.telemetry.ApiTelemetryWork;
-import org.neo4j.driver.internal.telemetry.TelemetryApi;
 import org.neo4j.driver.internal.util.FixedRetryLogic;
 import org.neo4j.driver.testutil.TestUtil;
 
@@ -69,8 +67,7 @@ class LeakLoggingNetworkSessionTest {
         when(logging.getLog(any(Class.class))).thenReturn(log);
         var session = newSession(logging, true);
         // begin transaction to make session obtain a connection
-        var apiTelemetryWork = new ApiTelemetryWork(TelemetryApi.UNMANAGED_TRANSACTION);
-        session.beginTransactionAsync(TransactionConfig.empty(), apiTelemetryWork);
+        session.beginTransactionAsync(TransactionConfig.empty());
 
         finalize(session);
 
@@ -106,8 +103,7 @@ class LeakLoggingNetworkSessionTest {
                 logging,
                 mock(BookmarkManager.class),
                 null,
-                null,
-                true);
+                null);
     }
 
     private static ConnectionProvider connectionProviderMock(boolean openConnection) {

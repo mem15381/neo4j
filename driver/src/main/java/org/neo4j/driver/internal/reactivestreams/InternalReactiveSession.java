@@ -27,8 +27,6 @@ import org.neo4j.driver.TransactionConfig;
 import org.neo4j.driver.internal.async.NetworkSession;
 import org.neo4j.driver.internal.async.UnmanagedTransaction;
 import org.neo4j.driver.internal.reactive.AbstractReactiveSession;
-import org.neo4j.driver.internal.telemetry.ApiTelemetryWork;
-import org.neo4j.driver.internal.telemetry.TelemetryApi;
 import org.neo4j.driver.reactivestreams.ReactiveResult;
 import org.neo4j.driver.reactivestreams.ReactiveSession;
 import org.neo4j.driver.reactivestreams.ReactiveTransaction;
@@ -53,12 +51,11 @@ public class InternalReactiveSession extends AbstractReactiveSession<ReactiveTra
 
     @Override
     public Publisher<ReactiveTransaction> beginTransaction(TransactionConfig config) {
-        return beginTransaction(config, null, new ApiTelemetryWork(TelemetryApi.UNMANAGED_TRANSACTION));
+        return beginTransaction(config, null);
     }
 
-    public Publisher<ReactiveTransaction> beginTransaction(
-            TransactionConfig config, String txType, ApiTelemetryWork apiTelemetryWork) {
-        return doBeginTransaction(config, txType, apiTelemetryWork);
+    public Publisher<ReactiveTransaction> beginTransaction(TransactionConfig config, String txType) {
+        return doBeginTransaction(config, txType);
     }
 
     @Override

@@ -37,7 +37,6 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -62,7 +61,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mockito;
 import org.neo4j.driver.AccessMode;
 import org.neo4j.driver.AuthTokens;
 import org.neo4j.driver.Bookmark;
@@ -400,16 +398,6 @@ public class BoltProtocolV3Test {
                         null,
                         Logging.none()));
         assertThat(e.getMessage(), startsWith("Database name parameter for selecting database is not supported"));
-    }
-
-    @Test
-    void shouldTelemetryReturnCompletedStageWithoutSendAnyMessage() {
-        var connection = connectionMock();
-
-        await(protocol.telemetry(connection, 1));
-
-        verify(connection, never()).write(Mockito.any(), Mockito.any());
-        verify(connection, never()).writeAndFlush(Mockito.any(), Mockito.any());
     }
 
     protected void testDatabaseNameSupport(boolean autoCommitTx) {

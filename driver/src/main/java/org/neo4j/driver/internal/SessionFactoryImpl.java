@@ -53,8 +53,7 @@ public class SessionFactoryImpl implements SessionFactory {
     }
 
     @Override
-    public NetworkSession newInstance(
-            SessionConfig sessionConfig, AuthToken overrideAuthToken, boolean telemetryDisabled) {
+    public NetworkSession newInstance(SessionConfig sessionConfig, AuthToken overrideAuthToken) {
         return createSession(
                 connectionProvider,
                 retryLogic,
@@ -66,8 +65,7 @@ public class SessionFactoryImpl implements SessionFactory {
                 logging,
                 sessionConfig.bookmarkManager().orElse(NoOpBookmarkManager.INSTANCE),
                 sessionConfig.notificationConfig(),
-                overrideAuthToken,
-                telemetryDisabled);
+                overrideAuthToken);
     }
 
     private Set<Bookmark> toDistinctSet(Iterable<Bookmark> bookmarks) {
@@ -144,8 +142,7 @@ public class SessionFactoryImpl implements SessionFactory {
             Logging logging,
             BookmarkManager bookmarkManager,
             NotificationConfig notificationConfig,
-            AuthToken authToken,
-            boolean telemetryDisabled) {
+            AuthToken authToken) {
         Objects.requireNonNull(bookmarks, "bookmarks may not be null");
         Objects.requireNonNull(bookmarkManager, "bookmarkManager may not be null");
         return leakedSessionsLoggingEnabled
@@ -160,8 +157,7 @@ public class SessionFactoryImpl implements SessionFactory {
                         logging,
                         bookmarkManager,
                         notificationConfig,
-                        authToken,
-                        telemetryDisabled)
+                        authToken)
                 : new NetworkSession(
                         connectionProvider,
                         retryLogic,
@@ -173,7 +169,6 @@ public class SessionFactoryImpl implements SessionFactory {
                         logging,
                         bookmarkManager,
                         notificationConfig,
-                        authToken,
-                        telemetryDisabled);
+                        authToken);
     }
 }

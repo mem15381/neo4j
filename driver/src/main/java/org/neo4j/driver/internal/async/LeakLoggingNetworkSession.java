@@ -48,8 +48,7 @@ public class LeakLoggingNetworkSession extends NetworkSession {
             Logging logging,
             BookmarkManager bookmarkManager,
             NotificationConfig notificationConfig,
-            AuthToken overrideAuthToken,
-            boolean telemetryDisabled) {
+            AuthToken overrideAuthToken) {
         super(
                 connectionProvider,
                 retryLogic,
@@ -61,8 +60,7 @@ public class LeakLoggingNetworkSession extends NetworkSession {
                 logging,
                 bookmarkManager,
                 notificationConfig,
-                overrideAuthToken,
-                telemetryDisabled);
+                overrideAuthToken);
         this.stackTrace = captureStackTrace();
     }
 

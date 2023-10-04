@@ -98,7 +98,6 @@ import org.neo4j.driver.internal.messaging.v5.BoltProtocolV5;
 import org.neo4j.driver.internal.messaging.v51.BoltProtocolV51;
 import org.neo4j.driver.internal.messaging.v52.BoltProtocolV52;
 import org.neo4j.driver.internal.messaging.v53.BoltProtocolV53;
-import org.neo4j.driver.internal.messaging.v54.BoltProtocolV54;
 import org.neo4j.driver.internal.retry.RetryLogic;
 import org.neo4j.driver.internal.spi.Connection;
 import org.neo4j.driver.internal.spi.ConnectionProvider;
@@ -255,15 +254,6 @@ public final class TestUtil {
 
     public static NetworkSession newSession(
             ConnectionProvider connectionProvider, AccessMode mode, RetryLogic retryLogic, Set<Bookmark> bookmarks) {
-        return newSession(connectionProvider, mode, retryLogic, bookmarks, true);
-    }
-
-    public static NetworkSession newSession(
-            ConnectionProvider connectionProvider,
-            AccessMode mode,
-            RetryLogic retryLogic,
-            Set<Bookmark> bookmarks,
-            boolean telemetryDisabled) {
         return new NetworkSession(
                 connectionProvider,
                 retryLogic,
@@ -275,8 +265,7 @@ public final class TestUtil {
                 DEV_NULL_LOGGING,
                 NoOpBookmarkManager.INSTANCE,
                 null,
-                null,
-                telemetryDisabled);
+                null);
     }
 
     public static void verifyRunRx(Connection connection, String query) {
@@ -466,8 +455,7 @@ public final class TestUtil {
                         BoltProtocolV5.VERSION,
                         BoltProtocolV51.VERSION,
                         BoltProtocolV52.VERSION,
-                        BoltProtocolV53.VERSION,
-                        BoltProtocolV54.VERSION)
+                        BoltProtocolV53.VERSION)
                 .contains(version)) {
             setupSuccessResponse(connection, CommitMessage.class);
             setupSuccessResponse(connection, RollbackMessage.class);

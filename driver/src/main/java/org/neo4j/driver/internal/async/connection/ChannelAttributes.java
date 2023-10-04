@@ -53,8 +53,6 @@ public final class ChannelAttributes {
     // configuration hints provided by the server
     private static final AttributeKey<Long> CONNECTION_READ_TIMEOUT = newInstance("connectionReadTimeout");
 
-    private static final AttributeKey<Boolean> TELEMETRY_ENABLED = newInstance("telemetryEnabled");
-
     private ChannelAttributes() {}
 
     public static String connectionId(Channel channel) {
@@ -174,14 +172,6 @@ public final class ChannelAttributes {
 
     public static void setAuthContext(Channel channel, AuthContext authContext) {
         setOnce(channel, AUTH_CONTEXT, authContext);
-    }
-
-    public static void setTelemetryEnabled(Channel channel, Boolean telemetryEnabled) {
-        setOnce(channel, TELEMETRY_ENABLED, telemetryEnabled);
-    }
-
-    public static Boolean telemetryEnabled(Channel channel) {
-        return Optional.ofNullable(get(channel, TELEMETRY_ENABLED)).orElse(false);
     }
 
     private static <T> T get(Channel channel, AttributeKey<T> key) {

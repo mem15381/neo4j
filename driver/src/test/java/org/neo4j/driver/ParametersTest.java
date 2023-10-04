@@ -115,8 +115,7 @@ class ParametersTest {
                 DEV_NULL_LOGGING,
                 mock(BookmarkManager.class),
                 null,
-                null,
-                true);
+                null);
         return new InternalSession(session);
     }
 }
